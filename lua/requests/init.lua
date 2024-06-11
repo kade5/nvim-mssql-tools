@@ -110,6 +110,27 @@ function M.cancel_query()
 	end)
 end
 
+function M.refresh_intellisense()
+	local client_id = client.get_client_id()
+	if not client_id then
+		print("Client was not started. No id generated.")
+		return
+	end
+	local lsp = vim.lsp.get_client_by_id(client_id)
+	if lsp == nil then
+		print("Client was not started. ID: " .. client.client_id)
+		return
+	end
+	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
+	local buffer_uri = manager.owner_uri
+
+	lsp.request("textDocument/rebuildIntelliSense", {
+		ownerUri = buffer_uri,
+	}, function(results)
+		vim.print(results)
+	end)
+end
+
 function M.save_to_csv(csv_path, on_save)
 	local client_id = client.get_client_id()
 	if not client_id then
