@@ -11,6 +11,7 @@ function M.start_client()
 			["connection/complete"] = handlers.connection_complete,
 			["query/complete"] = handlers.query_complete,
 			["query/message"] = handlers.query_message,
+			["textDocument/hover"] = handlers.hover,
 		},
 		-- capabilities = capabilities,
 		settings = {

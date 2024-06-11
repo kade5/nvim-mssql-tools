@@ -45,4 +45,11 @@ function M.query_message(err, result, ctx, config)
 	end
 end
 
+function M.hover(err, result, ctx, config)
+	if not result then
+		return
+	end
+	return vim.lsp.with(vim.lsp.handlers.hover, {})
+end
+
 return M
