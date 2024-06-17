@@ -1,7 +1,7 @@
 local client = require("sqltoolsservice.client")
 local managers = require("managers")
 local utils = require("utils")
-M = {}
+local M = {}
 
 function M.connect_to_database(on_connection_attempt)
 	local client_id = client.get_client_id()

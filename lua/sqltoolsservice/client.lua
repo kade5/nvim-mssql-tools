@@ -1,6 +1,8 @@
 local M = {}
 local sqltools = require("sqltoolsservice.install")
 local handlers = require("handlers")
+local oe_handlers = require("oe.handlers")
+local managers = require("managers")
 local client_id = nil
 
 function M.start_client()
@@ -11,6 +13,8 @@ function M.start_client()
 			["connection/complete"] = handlers.connection_complete,
 			["query/complete"] = handlers.query_complete,
 			["query/message"] = handlers.query_message,
+			["objectexplorer/sessioncreated"] = oe_handlers.session_created,
+			["objectexplorer/expandCompleted"] = oe_handlers.expand_completed,
 		},
 		-- capabilities = capabilities,
 		settings = {
@@ -100,6 +104,7 @@ function M.start_client()
 	else
 		print("Client returned with ID: " .. client_id)
 	end
+	managers.client_id = client_id
 	return client_id
 end
 

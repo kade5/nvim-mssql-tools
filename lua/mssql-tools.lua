@@ -11,6 +11,10 @@ M.client = client
 M.connections = connections
 M.requests = requests
 M.managers = managers
+M.oe = {
+	ui = require("oe.ui"),
+	requests = require("oe.requests"),
+}
 
 function M.attach_client()
 	vim.print("mssql-lsp client attached")
@@ -22,13 +26,10 @@ function M.attach_client()
 	end
 	vim.print(vim.lsp.buf_attach_client(0, client_id))
 	local manager = managers.new_manager(vim.api.nvim_get_current_buf())
-	vim.print("Manger:")
-	vim.print(manager)
 	manager.connection = connections.get_connection("Prod")
 end
 
 function M.setup()
-	vim.print(M)
 	if not install.is_installed() then
 		install.install_sqltools()
 	else
@@ -41,11 +42,9 @@ function M.setup()
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "sql",
 			callback = function()
-				vim.print("mssql-lsp client attached")
-				vim.print("Tried to created a new manager for buffer: " .. vim.api.nvim_get_current_buf())
 				vim.lsp.buf_attach_client(0, client_id)
+				vim.print("mssql-lsp client attached")
 				local manager = managers.new_manager(vim.api.nvim_get_current_buf())
-				vim.print(manager)
 				manager.connection = connections.get_connection("Prod")
 			end,
 		})

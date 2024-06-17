@@ -1,6 +1,17 @@
+## Requests 
 
-{"jsonrpc":"2.0","method":"query/complete","params":{"ownerUri":"file:///home/zeke/Projects/tests/test.sql","batchSummaries":[{"executionElapsed":"00:00:00.0329479","executionEnd":"2024-06-08T15:37:03.0717289-05:00","executionStart":"2024-06-08T15:37:03.0387810-05:00","hasError":true,"id":0,"selection":{"endColumn":13,"endLine":14,"startColumn":0,"startLine":0},"resultSetSummaries":[],"specialAction":{"none":true,"expectYukonXMLShowPlan":false}}]}}
+{"jsonrpc":"2.0","method":"textDocument/rebuildIntelliSense","params":{"ownerUri":"file:///home/zeke/Projects/tests/test.sql"}}Content-Length: 170
+
+{"jsonrpc":"2.0","id":1,"method":"objectexplorer/createsession","params":{"options":{"server":"","database":"","databaseDisplayName":"Prod","user":"","password":"","authenticationType":"SqlLogin"}}}Content-Length: 327
+
+{"jsonrpc":"2.0","id":4,"method":"objectexplorer/expand","params":{"sessionId":"{given_id}","nodePath":"{server}/{database}"}}
+
+## Responses
 
 {"jsonrpc":"2.0","method":"query/message","params":{"ownerUri":"file:///home/zeke/Projects/tests/test.sql","message":{"batchId":0,"isError":true,"time":"2024-06-08T15:37:03.0704714-05:00","message":"Msg 102, Level 15, State 1, Line 14\nIncorrect syntax near '>'."}}}Content-Length: 453
 
-{"jsonrpc":"2.0","method":"textDocument/rebuildIntelliSense","params":{"ownerUri":"file:///home/zeke/Projects/tests/test.sql"}}Content-Length: 170
+{"jsonrpc":"2.0","method":"query/complete","params":{"ownerUri":"file:///home/zeke/Projects/tests/test.sql","batchSummaries":[{"executionElapsed":"00:00:00.0329479","executionEnd":"2024-06-08T15:37:03.0717289-05:00","executionStart":"2024-06-08T15:37:03.0387810-05:00","hasError":true,"id":0,"selection":{"endColumn":13,"endLine":14,"startColumn":0,"startLine":0},"resultSetSummaries":[],"specialAction":{"none":true,"expectYukonXMLShowPlan":false}}]}}
+
+{"jsonrpc":"2.0","method":"objectexplorer/sessioncreated","params":{"success":true,"sessionId":"","rootNode":{base node info here},"errorNumber":null,"errorMessage":null}}Content-Length: 40
+
+{"jsonrpc":"2.0","method":"objectexplorer/expandCompleted","params":{"sessionId":"","nodes":[],"nodePath":"","errorMessage":null}}Content-Length: 134

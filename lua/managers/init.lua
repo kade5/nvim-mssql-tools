@@ -1,5 +1,6 @@
 local M = {}
 local buffer_managers = {}
+M.client_id = nil
 
 function M.new_manager(buffer_id, buffer_name)
 	local buf_name

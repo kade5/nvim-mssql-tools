@@ -7,7 +7,7 @@ local connections
 function M.read_connections()
 	local file = io.open(file_path, "r")
 	if not file then
-		print("connections.json not found")
+		vim.print("connections.json not found")
 		return {}
 	end
 	local content = file:read("*a")
@@ -15,7 +15,7 @@ function M.read_connections()
 
 	local json_connections = vim.json.decode(content)
 	if not json_connections then
-		print("Error decoding JSON")
+		vim.print("Error decoding JSON")
 		return {}
 	end
 	connections = json_connections
