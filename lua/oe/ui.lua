@@ -1,8 +1,9 @@
-local Split = require("nui.split")
-local event = require("nui.utils.autocmd")
 local NuiTree = require("nui.tree")
 local oe_manager = require("oe.manager")
 local oe_requests = require("oe.requests")
+local managers = require("managers")
+local requests = require("requests")
+local scripts = require("oe.scripts")
 local M = {}
 local root_node
 
@@ -54,32 +55,16 @@ function M.create_children(children)
 	return child_table
 end
 
--- local split = Split({
--- 	relative = "win",
--- 	position = "left",
--- 	size = "20%",
--- })
---
--- local btree = NuiTree.Node({ text = "b" }, {
--- 	NuiTree.Node({ text = "b-1" }),
--- 	NuiTree.Node({ text = "b-2" }),
--- })
---
--- local tree = NuiTree({
--- 	bufnr = split.bufnr,
--- 	nodes = {
--- 		NuiTree.Node({ text = "a" }),
--- 		btree,
--- 	},
--- })
-
 function M.open_object_explorer()
 	if not oe_manager.bufnr then
 		oe_manager.create_oe()
-		oe_requests.create_session()
+		local connection = oe_manager.get_connection()
+		local owner_uri = connection.databaseDisplayName .. "_ObjectExplorer"
+		local buffer_manager = managers.new_manager(oe_manager.bufnr, owner_uri)
+		buffer_manager.connection = connection
+		oe_requests.create_session(connection)
+		requests.connect_to_database(oe_manager.bufnr)
 	end
-	local split = oe_manager.get_buffer()
-	-- split:show()
 	if oe_manager.tree then
 		oe_manager.tree:render()
 	end
@@ -107,6 +92,22 @@ function M.toggle_node()
 	end
 
 	oe_manager.tree:render()
+end
+
+function M.open_script()
+	if oe_manager.bufnr ~= vim.api.nvim_get_current_buf() then
+		return
+	end
+	local curpos = vim.fn.getcurpos()
+	if not curpos[2] then
+		return
+	end
+	local node = oe_manager.tree:get_node(curpos[2])
+	if not node then
+		return
+	end
+
+	scripts.script_action(node)
 end
 
 return M

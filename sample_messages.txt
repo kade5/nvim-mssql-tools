@@ -6,6 +6,8 @@
 
 {"jsonrpc":"2.0","id":4,"method":"objectexplorer/expand","params":{"sessionId":"{given_id}","nodePath":"{server}/{database}"}}
 
+{"jsonrpc":"2.0","id":11,"method":"scripting/script","params":{"scriptDestination":"ToEditor","scriptingObjects":[{"type":"Table","schema":"test","name":"Test","parentName":null,"parentTypeName":null}],"scriptOptions":{"scriptCreateDrop":"ScriptCreate","typeOfDataToScript":"SchemaOnly","scriptStatistics":"ScriptStatsNone","targetDatabaseEngineEdition":"SqlAzureDatabaseEdition","targetDatabaseEngineType":"SqlAzure"},"ownerURI":"","operation":1}}Content-Length: 311
+
 ## Responses
 
 {"jsonrpc":"2.0","method":"query/message","params":{"ownerUri":"file:///home/zeke/Projects/tests/test.sql","message":{"batchId":0,"isError":true,"time":"2024-06-08T15:37:03.0704714-05:00","message":"Msg 102, Level 15, State 1, Line 14\nIncorrect syntax near '>'."}}}Content-Length: 453
@@ -15,3 +17,5 @@
 {"jsonrpc":"2.0","method":"objectexplorer/sessioncreated","params":{"success":true,"sessionId":"","rootNode":{base node info here},"errorNumber":null,"errorMessage":null}}Content-Length: 40
 
 {"jsonrpc":"2.0","method":"objectexplorer/expandCompleted","params":{"sessionId":"","nodes":[],"nodePath":"","errorMessage":null}}Content-Length: 134
+
+{"jsonrpc":"2.0","id":"11","result":{"operationId":"ef0c70cf-9423-4c93-9605-2e6fb27a76b0","script":""}}Content-Length: 261

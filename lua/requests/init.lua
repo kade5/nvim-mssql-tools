@@ -1,20 +1,27 @@
-local client = require("sqltoolsservice.client")
 local managers = require("managers")
 local utils = require("utils")
 local M = {}
 
-function M.connect_to_database(on_connection_attempt)
-	local client_id = client.get_client_id()
+function M.connect_to_database(buffer_number, on_connection_attempt)
+	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
 		return
 	end
 	local lsp = vim.lsp.get_client_by_id(client_id)
 	if lsp == nil then
-		print("Client was not started. ID: " .. client.client_id)
+		print("Client was not started. ID: " .. client_id)
 		return
 	end
-	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
+
+	local bufnr
+	if not buffer_number then
+		bufnr = vim.api.nvim_get_current_buf()
+	else
+		bufnr = buffer_number
+	end
+
+	local manager = managers.get_manager(bufnr)
 	local buffer_uri = manager.owner_uri
 
 	if not manager.connection then
@@ -35,14 +42,14 @@ function M.connect_to_database(on_connection_attempt)
 end
 
 function M.execute_query_doc(on_query_attempt)
-	local client_id = client.get_client_id()
+	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
 		return
 	end
 	local lsp = vim.lsp.get_client_by_id(client_id)
 	if lsp == nil then
-		print("Client was not started. ID: " .. client.client_id)
+		print("Client was not started. ID: " .. client_id)
 		return
 	end
 	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
@@ -58,14 +65,14 @@ function M.execute_query_doc(on_query_attempt)
 end
 
 function M.execute_query_partial(document_partial, on_query_attempt)
-	local client_id = client.get_client_id()
+	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
 		return
 	end
 	local lsp = vim.lsp.get_client_by_id(client_id)
 	if lsp == nil then
-		print("Client was not started. ID: " .. client.client_id)
+		print("Client was not started. ID: " .. client_id)
 		return
 	end
 	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
@@ -90,14 +97,14 @@ function M.execute_query_selection(on_query_attempt)
 end
 
 function M.cancel_query()
-	local client_id = client.get_client_id()
+	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
 		return
 	end
 	local lsp = vim.lsp.get_client_by_id(client_id)
 	if lsp == nil then
-		print("Client was not started. ID: " .. client.client_id)
+		print("Client was not started. ID: " .. client_id)
 		return
 	end
 	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
@@ -111,14 +118,14 @@ function M.cancel_query()
 end
 
 function M.refresh_intellisense()
-	local client_id = client.get_client_id()
+	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
 		return
 	end
 	local lsp = vim.lsp.get_client_by_id(client_id)
 	if lsp == nil then
-		print("Client was not started. ID: " .. client.client_id)
+		print("Client was not started. ID: " .. client_id)
 		return
 	end
 	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
@@ -132,14 +139,14 @@ function M.refresh_intellisense()
 end
 
 function M.save_to_csv(csv_path, on_save)
-	local client_id = client.get_client_id()
+	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
 		return false, nil
 	end
 	local lsp = vim.lsp.get_client_by_id(client_id)
 	if lsp == nil then
-		print("Client was not started. ID: " .. client.client_id)
+		print("Client was not started. ID: " .. client_id)
 		return false, nil
 	end
 	local manager = managers.get_manager(vim.api.nvim_get_current_buf())

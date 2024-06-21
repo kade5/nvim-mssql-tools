@@ -2,7 +2,7 @@ local managers = require("managers")
 local oe_manager = require("oe.manager")
 
 local M = {}
-function M.create_session(on_attempt)
+function M.create_session(connection, on_attempt)
 	local client_id = managers.client_id
 	if not client_id then
 		print("Client was not started. No id generated.")
@@ -13,8 +13,6 @@ function M.create_session(on_attempt)
 		print("Client closed. ID: " .. managers.client_id)
 		return
 	end
-
-	local connection = oe_manager.get_connection()
 
 	if not connection then
 		vim.print("No connection selected")
@@ -60,6 +58,32 @@ function M.expand_node_request(node, on_attempt)
 	}, function()
 		if on_attempt then
 			on_attempt()
+		end
+	end)
+end
+
+function M.script_as(options, on_success)
+	vim.print("Entered expand node request")
+	vim.print(options)
+	local client_id = managers.client_id
+	if not client_id then
+		print("Client was not started. No id generated.")
+		return
+	end
+	local lsp = vim.lsp.get_client_by_id(client_id)
+	if lsp == nil then
+		print("Client has already been closed. ID: " .. managers.client_id)
+		return
+	end
+
+	lsp.request("scripting/script", options, function(err, result)
+		vim.print("Entering script_as")
+		if err then
+			vim.print(err)
+		end
+		vim.print(result)
+		if on_success then
+			on_success(result)
 		end
 	end)
 end

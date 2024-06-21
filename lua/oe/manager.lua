@@ -8,6 +8,8 @@ local buffer
 local connection
 M.bufnr = nil
 M.session_id = nil
+M.previous_window = nil
+
 M.expanding_node = nil
 ---@type NuiTree
 M.tree = nil
@@ -35,6 +37,8 @@ function M.create_oe()
 	vim.lsp.buf_attach_client(M.bufnr, client_id)
 
 	M.choose_connection() -- TODO Comment this out when choose connection functionality is added
+
+	M.previous_window = vim.api.nvim_get_current_win()
 
 	buffer:mount()
 

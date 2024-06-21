@@ -15,4 +15,29 @@ function M.get_visual_selection()
 	}
 end
 
+function M.create_and_save_buffer(text, window, filename)
+	local bufrn = vim.api.nvim_create_buf(true, true)
+	if not window then
+		vim.print("No previous window")
+		return
+	end
+
+	vim.api.nvim_win_set_buf(window, bufrn)
+
+	local lines = {}
+	for line in text:gmatch("([^\n]*)\n?") do
+		table.insert(lines, line)
+	end
+
+	vim.api.nvim_buf_set_lines(bufrn, 0, -1, false, lines)
+
+	vim.api.nvim_buf_call(bufrn, function()
+		vim.cmd("write " .. filename)
+	end)
+
+	vim.api.nvim_buf_set_name(bufrn, filename)
+
+	return bufrn
+end
+
 return M

@@ -27,7 +27,8 @@ function M.new_manager(buffer_id, buffer_name)
 		result_file_path = nil,
 	}
 	buffer_managers[buf_id] = buffer_manager
-	return buffer_manager
+	vim.print(buffer_managers[buf_id])
+	return buffer_managers[buf_id]
 end
 
 function M.get_manager(buffer_id)
@@ -36,7 +37,7 @@ function M.get_manager(buffer_id)
 end
 
 function M.get_manager_by_owner_uri(owner_uri)
-	for _, manager in ipairs(buffer_managers) do
+	for _, manager in pairs(buffer_managers) do
 		if manager.owner_uri == owner_uri then
 			return manager
 		end
