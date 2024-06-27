@@ -99,10 +99,10 @@ function M.start_client()
 	})
 
 	if not client_id then
-		print("No client found")
+		vim.print("No client found")
 		return
 	else
-		print("Client returned with ID: " .. client_id)
+		vim.print("Client returned with ID: " .. client_id)
 	end
 	managers.client_id = client_id
 	return client_id

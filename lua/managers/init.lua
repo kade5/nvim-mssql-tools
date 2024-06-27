@@ -27,12 +27,10 @@ function M.new_manager(buffer_id, buffer_name)
 		result_file_path = nil,
 	}
 	buffer_managers[buf_id] = buffer_manager
-	vim.print(buffer_managers[buf_id])
 	return buffer_managers[buf_id]
 end
 
 function M.get_manager(buffer_id)
-	vim.print(buffer_managers)
 	return buffer_managers[buffer_id]
 end
 

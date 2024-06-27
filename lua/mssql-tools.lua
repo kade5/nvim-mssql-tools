@@ -17,14 +17,13 @@ M.oe = {
 }
 
 function M.attach_client()
-	vim.print("mssql-lsp client attached")
-	-- vim.print('Tried to create a new manager for buffer: ' .. vim.api.nvim_get_current_buf())
+	-- vim.print("mssql-lsp client attached")
 	local client_id = client.get_client_id()
 	if not client_id then
 		vim.print("Client has not been started")
 		return
 	end
-	vim.print(vim.lsp.buf_attach_client(0, client_id))
+	vim.lsp.buf_attach_client(0, client_id)
 	local manager = managers.new_manager(vim.api.nvim_get_current_buf())
 	manager.connection = connections.get_connection("Prod")
 end
@@ -43,7 +42,7 @@ function M.setup()
 			pattern = "sql",
 			callback = function()
 				vim.lsp.buf_attach_client(0, client_id)
-				vim.print("mssql-lsp client attached")
+				-- vim.print("mssql-lsp client attached")
 				local manager = managers.new_manager(vim.api.nvim_get_current_buf())
 				manager.connection = connections.get_connection("Prod")
 			end,

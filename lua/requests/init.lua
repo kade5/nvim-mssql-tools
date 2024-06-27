@@ -1,5 +1,6 @@
 local managers = require("managers")
 local utils = require("utils")
+local result_messages = require("results.messages")
 local M = {}
 
 function M.connect_to_database(buffer_number, on_connection_attempt)
@@ -52,8 +53,11 @@ function M.execute_query_doc(on_query_attempt)
 		print("Client was not started. ID: " .. client_id)
 		return
 	end
-	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
+	local bufrn = vim.api.nvim_get_current_buf()
+	local manager = managers.get_manager(bufrn)
 	local buffer_uri = manager.owner_uri
+
+	result_messages.start_new_messages(bufrn, manager.owner_uri)
 
 	lsp.request("query/executeDocumentSelection", {
 		ownerUri = buffer_uri,
@@ -75,9 +79,11 @@ function M.execute_query_partial(document_partial, on_query_attempt)
 		print("Client was not started. ID: " .. client_id)
 		return
 	end
-	local manager = managers.get_manager(vim.api.nvim_get_current_buf())
+	local bufrn = vim.api.nvim_get_current_buf()
+	local manager = managers.get_manager(bufrn)
 	local buffer_uri = manager.owner_uri
 
+	result_messages.start_new_messages(bufrn, manager.owner_uri)
 	vim.print(document_partial)
 
 	lsp.request("query/executeDocumentSelection", {

@@ -1,5 +1,6 @@
 local M = {}
 local managers = require("managers")
+local result_messages = require("results.messages")
 function M.connection_complete(err, result, ctx, config)
 	if err then
 		vim.notify(err)
@@ -37,7 +38,7 @@ end
 
 function M.query_message(err, result, ctx, config)
 	if result.message.message then
-		vim.print(result.message.message)
+		result_messages.write_message(result.message.message, result.ownerUri)
 	end
 
 	if err then
