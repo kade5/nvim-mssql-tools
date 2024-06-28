@@ -3,6 +3,17 @@ local M = {}
 -- The end column when using visual line mode and visual mode returns a different value
 -- TODO change function to remove extra lines around query and return the true end column
 -- regardless if using visual mode or visual line mode.
+local icons = {
+	Database = "",
+	Folder = "󰉋",
+	Table = "󰓫",
+	View = "󱂔",
+	StoredProcedure = "󱐁",
+	TableValuedFunction = "󰡱",
+	ScalarValuedFunction = "󰡱",
+	Column = "󰠵",
+}
+
 function M.get_visual_selection()
 	local start_pos = vim.fn.getcharpos("'<")
 	local end_pos = vim.fn.getcharpos("'>")
@@ -38,6 +49,15 @@ function M.create_and_save_buffer(text, window, filename)
 	vim.api.nvim_buf_set_name(bufrn, filename)
 
 	return bufrn
+end
+
+function M.get_icon(node)
+	local icon = icons[node.nodeType]
+	if not icon then
+		return node.label
+	end
+
+	return icon .. " " .. node.label
 end
 
 return M

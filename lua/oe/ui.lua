@@ -4,6 +4,8 @@ local oe_requests = require("oe.requests")
 local managers = require("managers")
 local requests = require("requests")
 local scripts = require("oe.scripts")
+local utils = require("utils")
+
 local M = {}
 local root_node
 
@@ -22,10 +24,8 @@ local function create_tree()
 end
 
 function M.create_root_node(rootNode)
-	local label = rootNode.label
-	-- local type = rootNode.nodeType --TODO use for nerd font symbol
 	root_node = NuiTree.Node({
-		text = label,
+		text = utils.get_icon(rootNode),
 		data = rootNode,
 	})
 
@@ -46,7 +46,7 @@ function M.create_children(children)
 	local child_table = {}
 	for _, child in ipairs(children) do
 		local child_node = NuiTree.Node({
-			text = child.label,
+			text = utils.get_icon(child),
 			data = child,
 		})
 		table.insert(child_table, child_node)
